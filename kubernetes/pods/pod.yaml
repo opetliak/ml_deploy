@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ml-pod
+spec:
+  containers:
+    - image: opetliak/ml_image:latest
+      name: ml-pod
+      command: ["/bin/sh"]
+      args: ["-c", "while true; do echo hello; sleep 10;done"]

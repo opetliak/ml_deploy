@@ -26,6 +26,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: ./docker/web/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web_image:latest
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker/training/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ml_image:latest
