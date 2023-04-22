@@ -9,7 +9,7 @@ Run sh file to build and push docker images ```opetliak/ml_image:latest and opet
 sh run.sh
 ```
 
-Start minikube cluster
+Start minikube cluster:
 
 ```
 minikube start
