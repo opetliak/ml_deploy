@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ml-job
+spec:
+  # This is the pod template
+  template:
+    spec:
+      containers:
+      - name: ml-job
+        image: opetliak/ml_image:latest
+      restartPolicy: Never
+  backoffLimit: 4
