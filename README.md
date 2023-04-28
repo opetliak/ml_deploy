@@ -1,8 +1,13 @@
 # Machine Learning in Production
 
 
-### H2 Infrastructure setup
+## Table of Contents
 
+1. [H2 Infrastructure setup](#infra_setup)
+2. [H1 Data storage & processing](#data_minio)
+
+## H2 Infrastructure setup
+<a name="infra_setup"></a>
 
 Run sh file to build and push docker images ```opetliak/ml_image:latest and opetliak/web_image:latest``` to docker hub : 
 ``` 
@@ -59,3 +64,68 @@ kubectl delete deployment ml-deployment
 minikube stop
 minikube delete
 ```
+
+## H1 Data storage & processing
+<a name="data_minio"></a>
+
+Create local cluster
+
+```
+minikube start
+```
+
+Create Persistent Volume Claim for local testing 
+
+```
+export MINIO_LOCAL_STORAGE_PATH="/path/to/your/local/minio/storage"
+kubectl create -f minio/minio-hostpath-pv.yaml
+kubectl create -f minio/minio-pvc.yaml
+```
+
+Create Minio Deployment
+
+```
+kubectl create -f minio/minio-deployment.yaml
+```
+
+Create Minio Service
+
+Possible options: 
+- ClusterIP - connection from inside the cluster
+- NodePort and LoadBalancer - external traffic
+
+We want to test it outside the cluster
+
+```
+kubectl create -f minio/minio-service.yaml
+```
+
+Check if everything is correct
+
+```
+kubectl get svc minio-service
+```
+
+Get the NodePort for the minio Console (in my case it's ```32177```):
+
+```
+kubectl get svc minio-service -o jsonpath='{.spec.ports[?(@.name=="console")].nodePort}'
+```
+
+Get the IP address of one of the Kubernetes nodes (in my case it's ```192.168.49.2```):
+
+```
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}'
+```
+
+Go to ```http://192.168.49.2:32177/login``` and login. 
+Here we can create bucket, upload the data, etc. 
+
+![minio_ui](./static/minio_ex.png)
+
+Resource cleanup
+
+```
+kubectl delete deployment minio-deployment &&  kubectl delete service minio-service && kubectl delete pv minio-pv && kubectl delete pvc minio-pvc
+```
+
