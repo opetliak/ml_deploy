@@ -128,6 +128,11 @@ Check API and Console post (will use API port for python tests)
 ```
 kubectl get service minio-service -o jsonpath='{.spec.ports[?(@.name=="api")].nodePort} {.spec.ports[?(@.name=="console"}'.nodePort}
 ```
+Run tests
+
+```
+pytest tests/utils/test_minio_crud_client.py
+```
 
 Resource cleanup
 
