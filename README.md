@@ -123,6 +123,12 @@ Here we can create bucket, upload the data, etc.
 
 ![minio_ui](./static/minio_ex.png)
 
+Check API and Console post (will use API port for python tests)
+
+```
+kubectl get service minio-service -o jsonpath='{.spec.ports[?(@.name=="api")].nodePort} {.spec.ports[?(@.name=="console"}'.nodePort}
+```
+
 Resource cleanup
 
 ```

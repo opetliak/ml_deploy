@@ -34,7 +34,7 @@ spec:
         - name: MINIO_ROOT_USER
           value: "minio"
         - name: MINIO_ROOT_PASSWORD
-          value: "minio_dkfjlkjx"
+          value: "minio11111"
         ports:
         - containerPort: 9000
         - containerPort: 9001

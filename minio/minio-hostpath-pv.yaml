@@ -8,16 +8,9 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce #the volume can be mounted as read-write by a single node. Can allow multiple pods to access the volume when the pods are running on the same node
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local
-  local:
-    path: /home/helen/Programming/ml_deployment/ml_deploy/data/
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - minikube
+# storageClassName: local
+  storageClassName: manual
+  hostPath:
+    path: "/home/minio" 
