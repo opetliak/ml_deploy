@@ -5,6 +5,7 @@
 
 1. [H2 Infrastructure setup](#infra_setup)
 2. [H1 Data storage & processing](#data_minio)
+3. [L2 Labeling & versioning](#data_labeling)
 
 ## H2 Infrastructure setup
 <a name="infra_setup"></a>
@@ -140,3 +141,13 @@ Resource cleanup
 kubectl delete deployment minio-deployment &&  kubectl delete service minio-service && kubectl delete pv minio-pv && kubectl delete pvc minio-pvc
 ```
 
+## L2 Labeling & versioning
+<a name="data_labeling"></a>
+
+Run label-studio
+
+```
+docker run -it  -p 8080:8080 -v $(pwd)/face_occlusion_data:/label-studio/data heartexlabs/label-studio:latest
+```
+
+Open the Label Studio UI at ```http://localhost:8080```
