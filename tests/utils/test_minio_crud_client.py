@@ -3,12 +3,6 @@ import os
 import io
 import time
 
-from pathlib import Path
-
-project_root = str(Path(__file__).resolve().parent.parent.parent)
-sys.path.append(project_root)
-
-import pathlib
 import tempfile
 import shutil
 from src.utils.minio_crud import MinioCRUDClient
@@ -19,8 +13,8 @@ from PIL import Image
 
 
 ENDPOINT = os.environ.get("MINIO_ENDPOINT", "192.168.49.2:32000")
-ACCESS_KEY = "3JnbRlFAACF1v5YG"
-SECRET_KEY = "lYFakKmgSpQbcKREnjPid3CXkujxPbJ8"
+ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY", "")
+SECRET_KEY = os.environ.get("MINIO_SECRET_KEY", "")
 
 client = MinioCRUDClient(ENDPOINT, ACCESS_KEY, SECRET_KEY, secure=False)
 
