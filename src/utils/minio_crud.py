@@ -9,10 +9,9 @@ class MinioCRUDClient:
     def create_bucket(self, bucket_name):
         try:
             if not self.client.bucket_exists(bucket_name):
-                self.client.make_bucket(bucket_name)
-                
+                self.client.make_bucket(bucket_name)    
         except S3Error as exc:
-            return False
+            raise exc  # Reraise the exception instead of returning a boolean value
         return True       
 
     def list_buckets(self):
@@ -22,16 +21,14 @@ class MinioCRUDClient:
         try:
             self.client.fput_object(bucket_name, object_name, file_path)
         except S3Error as exc:
-            print(f"Error writing file: {exc}")
-            return False
+            raise exc
         return True
 
     def read_file(self, bucket_name, object_name, file_path):
         try:
             self.client.fget_object(bucket_name, object_name, file_path)
         except S3Error as exc:
-            print(f"Error reading file: {exc}")
-            return False
+            raise exc
         return True
 
     def list_objects(self, bucket_name):
@@ -41,8 +38,7 @@ class MinioCRUDClient:
         try:
             self.client.remove_object(bucket_name, object_name)
         except S3Error as exc:
-            print(f"Error deleting object: {exc}")
-            return False
+            raise exc
         return True
 
     def delete_bucket(self, bucket_name):
@@ -50,6 +46,5 @@ class MinioCRUDClient:
             if self.client.bucket_exists(bucket_name):
                 self.client.remove_bucket(bucket_name)
         except S3Error as exc:
-            print(f"Error deleting bucket: {exc}")
-            return False
+            raise exc
         return True
